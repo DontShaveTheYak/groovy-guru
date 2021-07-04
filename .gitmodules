@@ -1,0 +1,3 @@
+[submodule "contrib/groovy-language-server"]
+	path = contrib/groovy-language-server
+	url = https://github.com/GroovyLanguageServer/groovy-language-server.git
