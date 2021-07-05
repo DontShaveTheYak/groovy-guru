@@ -3,6 +3,8 @@
 import sys
 from typing import Any, Dict
 
+from requests.api import get
+
 import semver
 import requests
 
@@ -31,6 +33,13 @@ def get_action(pull_request: str) -> str:
 def set_output(name: str, value: str):
     print(f"::set-output name={name}::{value}")
 
+def get_latest_release() -> str:
+    response = get_response(f"https://api.github.com/repos/{owner}/{repo}/releases")
+    for release in response:
+        if not release['draft'] and not release['prerelease']:
+            return release
+    raise Exception('Unable to find production relase.')
+
 latest_tag = sys.argv[1]
 pull_request = sys.argv[2]
 branch = sys.argv[3]
@@ -49,8 +58,8 @@ next_version: str = ''
 
 print(f'Latest tag is {latest_tag}')
 
-response = get_response(f"https://api.github.com/repos/{owner}/{repo}/releases/latest")
-release_tag = response['tag_name']
+latest_release = get_latest_release()
+release_tag = latest_release['tag_name']
 
 print(f'Latest release is {release_tag}')
 
