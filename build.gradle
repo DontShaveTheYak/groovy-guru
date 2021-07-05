@@ -2,17 +2,19 @@ plugins {
   id "com.moowork.node" version "1.3.1"
 }
 
+version = version == 'unspecified' ? '0.0.0' : version
+
 task build {
 }
 
 task copyJar(type: Copy) {
-    from "$projectDir/../build/libs/groovy-language-server-all.jar"
-    into "$buildDir/bin"
+    from "${projectDir}/../build/libs/groovy-language-server-all.jar"
+    into "${buildDir}/bin"
 }
 
 task copyLocal(type: Copy) {
-    from "$projectDir/package.json"
-    into "$buildDir"
+    from "${projectDir}/package.json"
+    into "${buildDir}"
 }
 
 task webpack(type: Exec) {
@@ -21,10 +23,11 @@ task webpack(type: Exec) {
   inputs.file("webpack.config.js")
   inputs.file("tsconfig.json")
   inputs.dir("src")
-  outputs.file("$buildDir/extension.js")
-  outputs.file("$buildDir/extension.js.map")
-  
-  def webpack = "$projectDir/node_modules/.bin/webpack"
+  outputs.file("${buildDir}/extension.js")
+  outputs.file("${buildDir}/extension.js.map")
+
+  def webpack = "${projectDir}/node_modules/.bin/webpack"
+
   if (System.getProperty("os.name").toLowerCase(Locale.ROOT).contains("windows")) {
     webpack += ".cmd"
   }
@@ -32,15 +35,16 @@ task webpack(type: Exec) {
 }
 
 task vsce(type: Exec) {
-  inputs.dir("$buildDir")
-  outputs.file("$buildDir/groovy-0.0.0.vsix")
+  inputs.dir(buildDir)
+  outputs.file("${buildDir}/groovy-butler-${project.version}.vsix")
 
-  def vsce = "$projectDir/node_modules/.bin/vsce"
+  def vsce = "${projectDir}/node_modules/.bin/vsce"
+
   if (System.getProperty("os.name").toLowerCase(Locale.ROOT).contains("windows")) {
     vsce += ".cmd"
   }
-  workingDir "$buildDir"
-  commandLine "$vsce", "package"
+  workingDir(buildDir)
+  commandLine(vsce, 'package', project.version)
 }
 
 tasks.webpack.dependsOn tasks.npmInstall
