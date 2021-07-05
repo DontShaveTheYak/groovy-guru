@@ -45,34 +45,10 @@ jobs:
           tag_format: ${{ env.TAG_FORMAT }}
           tag: ${{ steps.calculate.outputs.next_tag }}
 
-  build:
-    name: Build Assets
-    runs-on: ubuntu-latest
-    needs: tag
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v2.3.4
-        with:
-          ref: ${{ github.base_ref }}
-          submodules: 'true'
-
-      - name: Setup Java
-        uses: actions/setup-java@v2
-        with:
-          java-version: '8'
-          distribution: 'adopt'
-
-      - name: Build groovy-language-server
-        run: gradle -Pversion=${{needs.tag.outputs.tag}} build
-        working-directory: ./contrib/groovy-language-server
-
-      - name: Publish vscode extension
-        run: gradle -Pversion=${{needs.tag.outputs.tag}} build
-
   release:
     name: Create Release
     runs-on: ubuntu-latest
-    needs: [tag, build]
+    needs: [tag]
     steps:
       - name: Create Draft Release
         uses: release-drafter/release-drafter@v5.15.0
@@ -96,10 +72,29 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   upload:
-    name: Uploads assests
+    name: Upload Assests
     runs-on: ubuntu-latest
     needs: [tag, release]
     steps:
+
+      - name: Checkout Code
+        uses: actions/checkout@v2.3.4
+        with:
+          ref: ${{ github.base_ref }}
+          submodules: 'true'
+
+      - name: Setup Java
+        uses: actions/setup-java@v2
+        with:
+          java-version: '8'
+          distribution: 'adopt'
+
+      - name: Build groovy-language-server
+        run: gradle -Pversion=${{needs.tag.outputs.tag}} build
+        working-directory: ./contrib/groovy-language-server
+
+      - name: Build vscode extension
+        run: gradle -Pversion=${{needs.tag.outputs.tag}} build
 
       - name: Set Environment vars
         run: |
