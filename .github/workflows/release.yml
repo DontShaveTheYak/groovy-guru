@@ -45,27 +45,6 @@ jobs:
           tag_format: ${{ env.TAG_FORMAT }}
           tag: ${{ steps.calculate.outputs.next_tag }}
 
-  # publish:
-  #   name: Publish Package
-  #   runs-on: ubuntu-latest
-  #   needs: tag
-  #   steps:
-  #     - name: Checkout Code
-  #       uses: actions/checkout@v2.3.4
-  #       with:
-  #         ref: ${{ github.base_ref }}
-
-  #     - name: Publish Package
-  #       run: |
-  #         chmod +x gradlew
-  #         ./gradlew publishToSonatype closeAndReleaseSonatypeStagingRepository
-  #       env:
-  #         ORG_GRADLE_PROJECT_sonatypeUsername: ${{ secrets.NEXUS_USERNAME }}
-  #         ORG_GRADLE_PROJECT_sonatypePassword: ${{ secrets.NEXUS_PASSWORD }}
-  #         ORG_GRADLE_PROJECT_signingKey: ${{ secrets.SIGNING_KEY }}
-  #         ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.SIGNING_PASSWORD }}
-  #         ORG_GRADLE_PROJECT_CICD_TAG: ${{needs.tag.outputs.tag}}
-
   release:
     name: Create Release
     runs-on: ubuntu-latest
@@ -77,6 +56,8 @@ jobs:
         with:
           tag: ${{needs.tag.outputs.tag}}
           version: ${{needs.tag.outputs.tag}}
+          publish: true
+          prerelease: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -89,3 +70,49 @@ jobs:
           publish: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  upload:
+    name: Upload Assests
+    runs-on: ubuntu-latest
+    needs: [tag, release]
+    steps:
+
+      - name: Checkout Code
+        uses: actions/checkout@v2.3.4
+        with:
+          ref: ${{ github.base_ref }}
+          submodules: 'true'
+
+      - name: Setup Java
+        uses: actions/setup-java@v2
+        with:
+          java-version: '8'
+          distribution: 'adopt'
+
+      - name: Build groovy-language-server
+        run: gradle -Pversion=${{needs.tag.outputs.tag}} build
+        working-directory: ./contrib/groovy-language-server
+
+      - name: Build vscode extension
+        run: gradle -Pversion=${{needs.tag.outputs.tag}} build
+
+      - name: Set Environment vars
+        run: |
+          echo "SERVER_JAR=contrib/groovy-language-server/build/libs/groovy-language-server-${{needs.tag.outputs.tag}}-all.jar" >> $GITHUB_ENV
+          echo "EXT_VSIX=build/groovy-butler-${{needs.tag.outputs.tag}}.vsix" >> $GITHUB_ENV
+
+      - name: Upload groovy-language-server
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: ${{ env.SERVER_JAR }}
+          tag: ${{needs.tag.outputs.tag}}
+          overwrite: true
+
+      - name: Upload extension
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: ${{ env.EXT_VSIX }}
+          tag: ${{needs.tag.outputs.tag}}
+          overwrite: true

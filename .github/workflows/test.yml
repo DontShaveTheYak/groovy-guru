@@ -6,10 +6,12 @@ on:
       - 'master'
   pull_request:
     paths:
-      - '*gradle*'
+      - 'gradle/*'
+      - '*gradle'
+      - 'gradle*'
+      - '**.gradle'
       - '.github/workflows/test.yml'
       - 'src/**'
-      # - 'tests/**'
 
 jobs:
   build:
@@ -23,6 +25,9 @@ jobs:
         uses: actions/setup-java@v1
         with:
             java-version: 1.8
+
+      - name: Validate Gradle wrapper
+        uses: gradle/wrapper-validation-action@v1
 
       - name: Gradle Build
         run: ./gradlew build

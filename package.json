@@ -1,16 +1,16 @@
 {
-  "name": "groovy",
-  "displayName": "Groovy",
-  "description": "Language support for Groovy",
+  "name": "groovy-butler",
+  "displayName": "Groovy-Butler",
+  "description": "Groovy Intellisense for Visual Studio Code",
   "version": "0.0.0",
   "publisher": "publisher",
-  "homepage": "https://github.com/prominic/groovy-language-server",
+  "homepage": "https://github.com/DontShaveTheYak/groovy-butler",
   "repository": {
     "type": "git",
-    "url": "https://github.com/prominic/groovy-language-server.git"
+    "url": "https://github.com/DontShaveTheYak/groovy-butler.git"
   },
   "bugs": {
-    "url": "https://github.com/prominic/groovy-language-server/issues"
+    "url": "https://github.com/DontShaveTheYak/groovy-butler/issues"
   },
   "license": "Apache-2.0",
   "private": true,
