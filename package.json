@@ -84,5 +84,8 @@
   },
   "dependencies": {
     "@microsoft/vscode-file-downloader-api": "^1.0.1"
-  }
+  },
+  "extensionDependencies": [
+    "mindaro-dev.file-downloader"
+  ]
 }
