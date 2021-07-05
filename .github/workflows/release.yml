@@ -66,11 +66,11 @@ jobs:
         uses: gradle/wrapper-validation-action@v1
 
       - name: Build groovy-language-server
-        run: gradle build -Pversion=${{needs.tag.outputs.tag}}
+        run: gradle -Pversion=${{needs.tag.outputs.tag}} build
         working-directory: ./contrib/groovy-language-server
 
       - name: Publish vscode extension
-        run: gradle build -Pversion=${{needs.tag.outputs.tag}}
+        run: gradle -Pversion=${{needs.tag.outputs.tag}} build
 
   release:
     name: Create Release
