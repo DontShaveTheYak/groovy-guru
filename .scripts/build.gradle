@@ -27,44 +27,12 @@ shadowJar {
   }
 }
 
-
-
-def serverJar = layout.buildDirectory.file("libs/groovy-language-server-${version}-all.jar")
-def serverArtifact = artifacts.add('archives', serverJar.get().asFile)
-
 publishing {
-    publications {
-        mavenJava(MavenPublication) {
-
-            artifact serverArtifact
-
-            pom {
-                name = 'groovy-butler-ls'
-                description = 'A copy of the groovy-language-server.'
-                url = 'https://github.com/DontShaveTheYak/groovy-butler'
-                inceptionYear = '2021'
-
-                licenses {
-                    license {
-                        name = "The Apache License, Version 2.0"
-                        url = "http://www.apache.org/licenses/LICENSE-2.0.txt"
-                    }
-                }
-                developers {
-                    developer {
-                        id = 'shadycuz'
-                        name = 'Levi Blaney'
-                        email = 'shadycuz@gmail.com'
-                    }
-                }
-                scm {
-                    url = 'https://github.com/DontShaveTheYak/groovy-butler'
-                    connection = 'scm:https://github.com/DontShaveTheYak/groovy-butler.git'
-                    developerConnection = 'scm:git@github.com:DontShaveTheYak/groovy-butler.git'
-                }
-            }
-        }
+  publications {
+    shadow(MavenPublication) { publication ->
+      project.shadow.component(publication)
     }
+  }
   repositories {
     maven {
       name = "GitHubPackages"
