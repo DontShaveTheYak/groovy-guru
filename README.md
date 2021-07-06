@@ -2,15 +2,33 @@
 
 A WIP extension for [Visual Studio Code](https://code.visualstudio.com/) based on the [Groovy Language Server](https://github.com/prominic/groovy-language-server).
 
-## Build
+## Install
+
+### Latest prebuilt extension
+
+```sh
+curl -s https://api.github.com/repos/DontShaveTheYak/groovy-butler/releases/latest \
+| grep "browser_download_url.*vsix" \
+| cut -d : -f 2,3 \
+| tr -d \" \
+| wget -qi -
+
+code --install-extension groovy-butler-*.vsix
+```
+
+To install a specfic version, download the `vsix` file from the [releases](https://github.com/DontShaveTheYak/groovy-butler/releases) page.
+
+### Build from source
 
 To build from the command line, run the following command:
 
 ```sh
-./gradlew build
+./gradlew build -Pversion=${VERSION}
 ```
 
-The extension will be created in the _build_ folder.
+You need to pass in a valid version so the client can download the server from the releases page.
+
+The extension will be created in the `./build` folder.
 
 ## Acknowledgements
 * [Groovy Language Server](https://github.com/prominic/groovy-language-server)

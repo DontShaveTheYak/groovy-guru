@@ -44,7 +44,7 @@ task vsce(type: Exec) {
     vsce += ".cmd"
   }
   workingDir(buildDir)
-  commandLine(vsce, 'package', project.version)
+  commandLine(vsce, 'package', project.version, '--yarn')
 }
 
 tasks.webpack.dependsOn tasks.npmInstall
