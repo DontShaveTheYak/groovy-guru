@@ -107,7 +107,7 @@ jobs:
       - name: Set Environment vars
         run: |
           echo "SERVER_JAR=contrib/groovy-language-server/build/libs/groovy-language-server-${{needs.tag.outputs.tag}}-all.jar" >> $GITHUB_ENV
-          echo "EXT_VSIX=build/groovy-butler-${{needs.tag.outputs.tag}}.vsix" >> $GITHUB_ENV
+          echo "EXT_VSIX=build/groovy-guru-${{needs.tag.outputs.tag}}.vsix" >> $GITHUB_ENV
 
       - name: Upload groovy-language-server
         uses: svenstaro/upload-release-action@v2
