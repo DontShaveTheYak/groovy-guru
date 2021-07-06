@@ -58,6 +58,7 @@ jobs:
           version: ${{needs.tag.outputs.tag}}
           publish: true
           prerelease: true
+          name: v${{needs.tag.outputs.tag}}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
