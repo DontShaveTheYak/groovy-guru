@@ -116,7 +116,7 @@ async function fetchLanguageServer() {
       console.log(`Downloaded ${downloadedBytes}/${totalBytes} bytes`);
   };
 
-  const url = `https://github.com/DontShaveTheYak/groovy-butler/releases/download/${version}/groovy-language-server-${version}-all.jar`
+  const url = `https://github.com/DontShaveTheYak/groovy-guru/releases/download/${version}/groovy-language-server-${version}-all.jar`
   const fileDownloader: FileDownloader = await getApi();
   serverBin = await fileDownloader.downloadFile(
     Uri.parse(url),

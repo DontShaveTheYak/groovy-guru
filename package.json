@@ -1,16 +1,16 @@
 {
-  "name": "groovy-butler",
-  "displayName": "Groovy-Butler",
+  "name": "groovy-guru",
+  "displayName": "Groovy-Guru",
   "description": "Groovy Intellisense for Visual Studio Code",
   "version": "0.0.0",
   "publisher": "publisher",
-  "homepage": "https://github.com/DontShaveTheYak/groovy-butler",
+  "homepage": "https://github.com/DontShaveTheYak/groovy-guru",
   "repository": {
     "type": "git",
-    "url": "https://github.com/DontShaveTheYak/groovy-butler.git"
+    "url": "https://github.com/DontShaveTheYak/groovy-guru.git"
   },
   "bugs": {
-    "url": "https://github.com/DontShaveTheYak/groovy-butler/issues"
+    "url": "https://github.com/DontShaveTheYak/groovy-guru/issues"
   },
   "license": "Apache-2.0",
   "private": true,
