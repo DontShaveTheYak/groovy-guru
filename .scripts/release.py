@@ -8,7 +8,7 @@ from requests.api import get
 import semver
 import requests
 
-repo: str = 'groovy-butler'
+repo: str = 'groovy-guru'
 owner: str = 'DontShaveTheYak'
 
 def do_action(action, version):

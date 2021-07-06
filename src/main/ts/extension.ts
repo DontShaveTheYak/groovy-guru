@@ -1,5 +1,5 @@
 ////////////////////////////////////////////////////////////////////////////////
-// Copyright 2021 Prominic.NET, Inc.
+// Copyright 2021 DontShaveTheYak
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -13,7 +13,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License
 //
-// Author: Prominic.NET, Inc.
+// Author: DontShaveTheYak
 // No warranty of merchantability or fitness of any kind.
 // Use this software at your own risk.
 ////////////////////////////////////////////////////////////////////////////////
@@ -116,7 +116,7 @@ async function fetchLanguageServer() {
       console.log(`Downloaded ${downloadedBytes}/${totalBytes} bytes`);
   };
 
-  const url = `https://github.com/DontShaveTheYak/groovy-butler/releases/download/${version}/groovy-language-server-${version}-all.jar`
+  const url = `https://github.com/DontShaveTheYak/groovy-guru/releases/download/${version}/groovy-language-server-${version}-all.jar`
   const fileDownloader: FileDownloader = await getApi();
   serverBin = await fileDownloader.downloadFile(
     Uri.parse(url),

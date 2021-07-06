@@ -36,7 +36,7 @@ task webpack(type: Exec) {
 
 task vsce(type: Exec) {
   inputs.dir(buildDir)
-  outputs.file("${buildDir}/groovy-butler-${project.version}.vsix")
+  outputs.file("${buildDir}/groovy-guru-${project.version}.vsix")
 
   def vsce = "${projectDir}/node_modules/.bin/vsce"
 

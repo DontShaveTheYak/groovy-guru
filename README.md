@@ -7,16 +7,16 @@ A WIP extension for [Visual Studio Code](https://code.visualstudio.com/) based o
 ### Latest prebuilt extension
 
 ```sh
-curl -s https://api.github.com/repos/DontShaveTheYak/groovy-butler/releases/latest \
+curl -s https://api.github.com/repos/DontShaveTheYak/groovy-guru/releases/latest \
 | grep "browser_download_url.*vsix" \
 | cut -d : -f 2,3 \
 | tr -d \" \
 | wget -qi -
 
-code --install-extension groovy-butler-*.vsix
+code --install-extension groovy-guru-*.vsix
 ```
 
-To install a specfic version, download the `vsix` file from the [releases](https://github.com/DontShaveTheYak/groovy-butler/releases) page.
+To install a specfic version, download the `vsix` file from the [releases](https://github.com/DontShaveTheYak/groovy-guru/releases) page.
 
 ### Build from source
 
