@@ -25,7 +25,7 @@ import {
   LanguageClientOptions,
   Executable,
 } from "vscode-languageclient/node";
-import { Uri } from "vscode";
+import { Uri, CancellationTokenSource } from "vscode";
 import { getApi, FileDownloader } from "@microsoft/vscode-file-downloader-api";
 
 
@@ -107,12 +107,23 @@ async function fetchLanguageServer() {
 
   const version: string = extensionContext.extension.packageJSON.version
 
+  vscode.window.showInformationMessage(`Downloading groovy-language-server ${version} from GitHub.`)
+
+  const cancellationTokenSource = new CancellationTokenSource();
+  const cancellationToken = cancellationTokenSource.token;
+
+  const progressCallback = (downloadedBytes: number, totalBytes: number | undefined) => {
+      console.log(`Downloaded ${downloadedBytes}/${totalBytes} bytes`);
+  };
+
   const url = `https://github.com/DontShaveTheYak/groovy-butler/releases/download/${version}/groovy-language-server-${version}-all.jar`
   const fileDownloader: FileDownloader = await getApi();
   serverBin = await fileDownloader.downloadFile(
     Uri.parse(url),
     'groovy-language-server-all.jar',
-    extensionContext
+    extensionContext,
+    cancellationToken,
+    progressCallback
   );
 }
 
