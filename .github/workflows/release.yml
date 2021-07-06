@@ -45,6 +45,13 @@ jobs:
           tag_format: ${{ env.TAG_FORMAT }}
           tag: ${{ steps.calculate.outputs.next_tag }}
 
+      - name: Force Create Tag
+        uses: richardsimko/update-tag@v1
+        with:
+          tag_name: ${{ steps.calculate.outputs.next_tag }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
   release:
     name: Create Release
     runs-on: ubuntu-latest
