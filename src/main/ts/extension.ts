@@ -106,6 +106,16 @@ async function fetchLanguageServer() {
   }
 
   const version: string = extensionContext.extension.packageJSON.version
+  const fileName = `groovy-language-server-${version}-all.jar`
+  const url = `https://github.com/DontShaveTheYak/groovy-guru/releases/download/${version}/${fileName}`
+  const fileDownloader: FileDownloader = await getApi();
+
+  const existingBin = await fileDownloader.tryGetItem(fileName, extensionContext);
+
+  if (existingBin) {
+    serverBin = existingBin
+    return
+  }
 
   vscode.window.showInformationMessage(`Downloading groovy-language-server ${version} from GitHub.`)
 
@@ -116,11 +126,9 @@ async function fetchLanguageServer() {
       console.log(`Downloaded ${downloadedBytes}/${totalBytes} bytes`);
   };
 
-  const url = `https://github.com/DontShaveTheYak/groovy-guru/releases/download/${version}/groovy-language-server-${version}-all.jar`
-  const fileDownloader: FileDownloader = await getApi();
   serverBin = await fileDownloader.downloadFile(
     Uri.parse(url),
-    'groovy-language-server-all.jar',
+    fileName,
     extensionContext,
     cancellationToken,
     progressCallback
