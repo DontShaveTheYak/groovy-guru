@@ -119,3 +119,9 @@ jobs:
           file: groovy-guru-${{needs.tag.outputs.tag}}.vsix
           tag: ${{needs.tag.outputs.tag}}
           overwrite: true
+
+      - name: Publish Extension
+        if: github.base_ref == 'master'
+        run: gradle -Pversion=${{needs.tag.outputs.tag}} publish
+        env:
+          VSCE_PAT: ${{ secrets.VSCE_PAT }}
