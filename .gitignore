@@ -5,6 +5,7 @@
 
 # VSCode
 .vscode/
+*.vsix
 
 # macOS
 .DS_Store
