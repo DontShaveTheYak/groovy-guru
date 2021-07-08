@@ -4,17 +4,14 @@ plugins {
 
 version = version == 'unspecified' ? '0.0.0' : version
 
+def extensionFile = "groovy-guru-${project.version}.vsix"
+
 task build {
 }
 
 task copyJar(type: Copy) {
     from "${projectDir}/../build/libs/groovy-language-server-all.jar"
     into "${buildDir}/bin"
-}
-
-task copyLocal(type: Copy) {
-    from "${projectDir}/package.json"
-    into "${buildDir}"
 }
 
 task webpack(type: Exec) {
@@ -36,20 +33,32 @@ task webpack(type: Exec) {
 
 task vsce(type: Exec) {
   inputs.dir(buildDir)
-  outputs.file("${buildDir}/groovy-guru-${project.version}.vsix")
+  outputs.file(extensionFile)
 
   def vsce = "${projectDir}/node_modules/.bin/vsce"
 
   if (System.getProperty("os.name").toLowerCase(Locale.ROOT).contains("windows")) {
     vsce += ".cmd"
   }
-  workingDir(buildDir)
-  commandLine(vsce, 'package', project.version, '--yarn')
+
+  commandLine(vsce, 'package', project.version, '--no-git-tag-version')
+}
+
+task publish(type: Exec) {
+  inputs.file(extensionFile)
+
+  def vsce = "${projectDir}/node_modules/.bin/vsce"
+
+  if (System.getProperty("os.name").toLowerCase(Locale.ROOT).contains("windows")) {
+    vsce += ".cmd"
+  }
+
+  commandLine(vsce, 'publish', '--no-git-tag-version', '--packagePath', extensionFile)
 }
 
 tasks.webpack.dependsOn tasks.npmInstall
 tasks.vsce.dependsOn tasks.copyJar
-tasks.vsce.dependsOn tasks.copyLocal
 tasks.vsce.dependsOn tasks.webpack
 tasks.build.dependsOn tasks.vsce
+tasks.publish.dependsOn tasks.build
 

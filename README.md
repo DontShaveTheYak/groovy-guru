@@ -1,24 +1,36 @@
 # Groovy IntelliSense for Visual Studio Code
 
-A WIP extension for [Visual Studio Code](https://code.visualstudio.com/) based on the [Groovy Language Server](https://github.com/prominic/groovy-language-server).
+<!--TODO: We should add a badge for the build status or link to the build dashboard.-->
 
-## Install
+[The VS Code Groovy extension](https://marketplace.visualstudio.com/items?itemName=v)
+provides rich language support for the
+[Groovy programming language](https://groovy-lang.org/) using the [Groovy Language Server](https://github.com/prominic/groovy-language-server).
 
-### Latest prebuilt extension
+## Quick Start
 
-```sh
-curl -s https://api.github.com/repos/DontShaveTheYak/groovy-guru/releases/latest \
-| grep "browser_download_url.*vsix" \
-| cut -d : -f 2,3 \
-| tr -d \" \
-| wget -qi -
+Welcome! 👋🏻<br/>
+Whether you are new to Groovy or an experienced Groovy developer, we hope this
+extension fits your needs and enhances your development experience.
 
-code --install-extension groovy-guru-*.vsix
-```
+* **Step 1.** If you haven't done so already, install [Java 1.8 aka 8](https://www.java.com/en/download/help/index_installing.html)
+  and the [VS Code Groovy extension].
+  * [Managing extensions in VS Code].
+* **Step 2.** To activate the extension, open any directory or workspace
+  containing Groovy code.
 
-To install a specfic version, download the `vsix` file from the [releases](https://github.com/DontShaveTheYak/groovy-guru/releases) page.
+You are ready to get Groovy :-) &nbsp;&nbsp; 🎉🎉🎉
 
-### Build from source
+## Features
+
+The extension is currently a work-in-progress but does provide basic IntelliSense. We plan to extend this extension to include code navigation and code editing.
+
+<p align=center>
+<img src="docs/images/completion-signature-help.gif">
+<br/>
+<em>(Code completion and Signature Help)</em>
+</p>
+
+## Build from source
 
 To build from the command line, run the following command:
 
@@ -33,4 +45,8 @@ The extension will be created in the `./build` folder.
 ## Acknowledgements
 * [Groovy Language Server](https://github.com/prominic/groovy-language-server)
 * [Moonshine IDE](https://moonshine-ide.com)
+* [ScreenToGif](https://github.com/NickeManarin/ScreenToGif/)
 <!-- * [Best-README-Template](https://github.com/othneildrew/Best-README-Template) -->
+
+[Managing extensions in VS Code]: https://code.visualstudio.com/docs/editor/extension-gallery
+[VS Code Go extension]: https://marketplace.visualstudio.com/items?itemName=DontShaveTheYak.groovy-guru
