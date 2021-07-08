@@ -104,16 +104,11 @@ jobs:
       - name: Build vscode extension
         run: gradle -Pversion=${{needs.tag.outputs.tag}} build
 
-      - name: Set Environment vars
-        run: |
-          echo "SERVER_JAR=contrib/groovy-language-server/build/libs/groovy-language-server-${{needs.tag.outputs.tag}}-all.jar" >> $GITHUB_ENV
-          echo "EXT_VSIX=build/groovy-guru-${{needs.tag.outputs.tag}}.vsix" >> $GITHUB_ENV
-
       - name: Upload groovy-language-server
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: ${{ env.SERVER_JAR }}
+          file: contrib/groovy-language-server/build/libs/groovy-language-server-${{needs.tag.outputs.tag}}-all.jar
           tag: ${{needs.tag.outputs.tag}}
           overwrite: true
 
@@ -121,6 +116,6 @@ jobs:
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: ${{ env.EXT_VSIX }}
+          file: groovy-guru-${{needs.tag.outputs.tag}}.vsix
           tag: ${{needs.tag.outputs.tag}}
           overwrite: true
