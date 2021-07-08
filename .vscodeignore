@@ -1,0 +1,32 @@
+src/
+contrib/
+.scripts/
+tsconfig.json
+webpack.config.json
+
+# Eclipse
+.classpath
+.project
+.settings/
+
+# VSCode
+.vscode/
+*.vsix
+
+# macOS
+.DS_Store
+
+# Java
+*.class
+
+# Gradle
+.gradle/
+bin/
+**gradle
+gradlew*
+
+# Maven
+target/
+
+# Node.js
+node_modules/
