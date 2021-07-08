@@ -1,3 +1,9 @@
+src/
+contrib/
+.scripts/
+tsconfig.json
+webpack.config.json
+
 # Eclipse
 .classpath
 .project
@@ -16,7 +22,8 @@
 # Gradle
 .gradle/
 bin/
-build/
+**gradle
+gradlew*
 
 # Maven
 target/

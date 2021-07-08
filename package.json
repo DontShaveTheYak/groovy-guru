@@ -3,7 +3,8 @@
   "displayName": "Groovy-Guru",
   "description": "Groovy Intellisense for Visual Studio Code",
   "version": "0.0.0",
-  "publisher": "publisher",
+  "preview": true,
+  "publisher": "DontShaveTheYak",
   "homepage": "https://github.com/DontShaveTheYak/groovy-guru",
   "repository": {
     "type": "git",
@@ -11,6 +12,11 @@
   },
   "bugs": {
     "url": "https://github.com/DontShaveTheYak/groovy-guru/issues"
+  },
+  "icon": "media/icon.png",
+  "galleryBanner": {
+    "color": "#5c2d91",
+    "theme": "light"
   },
   "license": "Apache-2.0",
   "private": true,
@@ -21,7 +27,7 @@
     "Groovy",
     "Grails"
   ],
-  "main": "extension",
+  "main": "./build/extension",
   "engines": {
     "vscode": "^1.56.0"
   },
