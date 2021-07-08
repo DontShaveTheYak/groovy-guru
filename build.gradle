@@ -4,6 +4,8 @@ plugins {
 
 version = version == 'unspecified' ? '0.0.0' : version
 
+def extensionFile = "groovy-guru-${project.version}.vsix"
+
 task build {
 }
 
@@ -31,7 +33,7 @@ task webpack(type: Exec) {
 
 task vsce(type: Exec) {
   inputs.dir(buildDir)
-  outputs.file("groovy-guru-${project.version}.vsix")
+  outputs.file(extensionFile)
 
   def vsce = "${projectDir}/node_modules/.bin/vsce"
 
@@ -42,8 +44,21 @@ task vsce(type: Exec) {
   commandLine(vsce, 'package', project.version, '--no-git-tag-version')
 }
 
+task publish(type: Exec) {
+  inputs.file(extensionFile)
+
+  def vsce = "${projectDir}/node_modules/.bin/vsce"
+
+  if (System.getProperty("os.name").toLowerCase(Locale.ROOT).contains("windows")) {
+    vsce += ".cmd"
+  }
+
+  commandLine(vsce, 'publish', '--no-git-tag-version', '--packagePath', extensionFile)
+}
+
 tasks.webpack.dependsOn tasks.npmInstall
 tasks.vsce.dependsOn tasks.copyJar
 tasks.vsce.dependsOn tasks.webpack
 tasks.build.dependsOn tasks.vsce
+tasks.publish.dependsOn tasks.build
 
