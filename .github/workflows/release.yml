@@ -97,18 +97,26 @@ jobs:
           java-version: '8'
           distribution: 'adopt'
 
+      - name: Use Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+          cache: 'yarn'
+
+      - name: Install dependencies
+        run: yarn --frozen-lockfile
+
       - name: Build groovy-language-server
-        run: gradle -Pversion=${{needs.tag.outputs.tag}} build
-        working-directory: ./contrib/groovy-language-server
+        run: yarn run build-server
 
       - name: Build vscode extension
-        run: gradle -Pversion=${{needs.tag.outputs.tag}} build
+        run: yarn run build-extension ${{needs.tag.outputs.tag}}
 
       - name: Upload groovy-language-server
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: contrib/groovy-language-server/build/libs/groovy-language-server-${{needs.tag.outputs.tag}}-all.jar
+          file: bin/groovy-language-server-all.jar
           tag: ${{needs.tag.outputs.tag}}
           overwrite: true
 
@@ -122,6 +130,6 @@ jobs:
 
       - name: Publish Extension
         if: github.base_ref == 'master'
-        run: gradle -Pversion=${{needs.tag.outputs.tag}} publish
+        run: yarn run publish groovy-guru-${{needs.tag.outputs.tag}}.vsix
         env:
           VSCE_PAT: ${{ secrets.VSCE_PAT }}

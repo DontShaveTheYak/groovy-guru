@@ -2,7 +2,7 @@
 
 <!--TODO: We should add a badge for the build status or link to the build dashboard.-->
 
-[The VS Code Groovy extension](https://marketplace.visualstudio.com/items?itemName=v)
+[The Groovy-Guru extension](https://marketplace.visualstudio.com/items?itemName=DontShaveTheYak.groovy-guru)
 provides rich language support for the
 [Groovy programming language](https://groovy-lang.org/) using the [Groovy Language Server](https://github.com/prominic/groovy-language-server).
 
@@ -32,15 +32,25 @@ The extension is currently a work-in-progress but does provide basic IntelliSens
 
 ## Build from source
 
-To build from the command line, run the following command:
+You first need to build the language server.
 
 ```sh
-./gradlew build -Pversion=${VERSION}
+yarn run build-server
 ```
 
-You need to pass in a valid version so the client can download the server from the releases page.
+Then you can package the extension.
+```sh
+yarn run build-extension
+```
 
-The extension will be created in the `./build` folder.
+Now you can install it into vscode.
+
+- Using the CLI
+  ```sh
+  code --install-extension groovy-guru-0.0.0.vsix
+  ```
+
+- Using the GUI - `ctrl` + `shift` + `p` then type "Extensions: Install from VSIX"
 
 ## Acknowledgements
 * [Groovy Language Server](https://github.com/prominic/groovy-language-server)

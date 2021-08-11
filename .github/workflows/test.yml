@@ -6,10 +6,7 @@ on:
       - 'master'
   pull_request:
     paths:
-      - 'gradle/*'
-      - '*gradle'
-      - 'gradle*'
-      - '**.gradle'
+      - 'package.json'
       - '.github/workflows/test.yml'
       - 'src/**'
 
@@ -21,13 +18,20 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v1
 
-      - name: Set up JDK 1.8
-        uses: actions/setup-java@v1
+      - name: Setup Java
+        uses: actions/setup-java@v2
         with:
-            java-version: 1.8
+          java-version: '8'
+          distribution: 'adopt'
 
-      - name: Validate Gradle wrapper
-        uses: gradle/wrapper-validation-action@v1
+      - name: Use Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+          cache: 'yarn'
 
-      - name: Gradle Build
-        run: ./gradlew build
+      - name: Install dependencies
+        run: yarn --frozen-lockfile
+
+      - name: Run Tests
+        run: xvfb-run -a yarn run ci
