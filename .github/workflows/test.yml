@@ -16,7 +16,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2.3.4
+        with:
+          ref: ${{ github.base_ref }}
+          submodules: 'true'
 
       - name: Setup Java
         uses: actions/setup-java@v2
