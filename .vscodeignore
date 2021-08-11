@@ -1,32 +1,16 @@
-src/
-contrib/
-.scripts/
-tsconfig.json
-webpack.config.json
-
-# Eclipse
-.classpath
-.project
-.settings/
-
-# VSCode
-.vscode/
+.vscode
+.vscode-test
+out
+node_modules
+src
+.gitignore
+.yarnrc
+vsc-extension-quickstart.md
+**/tsconfig.json
+**/.eslintrc.json
+**/*.map
+**/*.ts
+.scripts
+contrib
 *.vsix
-
-# macOS
-.DS_Store
-
-# Java
-*.class
-
-# Gradle
-.gradle/
-bin/
-**gradle
-gradlew*
-
-# Maven
-target/
-
-# Node.js
-node_modules/
+.github/**
