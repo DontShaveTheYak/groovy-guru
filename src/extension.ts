@@ -25,9 +25,6 @@ import {
   LanguageClientOptions,
   Executable,
 } from "vscode-languageclient/node";
-import { Uri, CancellationTokenSource } from "vscode";
-import { getApi, FileDownloader } from "@microsoft/vscode-file-downloader-api";
-
 
 const MISSING_JAVA_ERROR =
   "Could not locate valid JDK. To configure JDK manually, use the groovy.java.home setting.";
@@ -38,11 +35,9 @@ const RELOAD_WINDOW_MESSAGE =
   "To apply new settings for Groovy, please reload the window.";
 const STARTUP_ERROR = "The Groovy extension failed to start.";
 const LABEL_RELOAD_WINDOW = "Reload Window";
-
 let extensionContext: vscode.ExtensionContext | null = null;
 let languageClient: LanguageClient | null = null;
 let javaPath: string | null = null;
-let serverBin: Uri | null = null;
 
 function onDidChangeConfiguration(event: vscode.ConfigurationChangeEvent) {
   if (event.affectsConfiguration("groovy.java.home")) {
@@ -78,7 +73,7 @@ function restartLanguageServer() {
   );
 }
 
-export async function activate(context: vscode.ExtensionContext) {
+export function activate(context: vscode.ExtensionContext) {
   extensionContext = context;
   javaPath = findJava();
   vscode.workspace.onDidChangeConfiguration(onDidChangeConfiguration);
@@ -88,51 +83,11 @@ export async function activate(context: vscode.ExtensionContext) {
     restartLanguageServer
   );
 
-  await fetchLanguageServer();
-
   startLanguageServer();
 }
 
 export function deactivate() {
   extensionContext = null;
-}
-
-async function fetchLanguageServer() {
-
-  if (!extensionContext) {
-    //something very bad happened!
-    vscode.window.showErrorMessage(STARTUP_ERROR);
-    return;
-  }
-
-  const version: string = extensionContext.extension.packageJSON.version
-  const fileName = `groovy-language-server-${version}-all.jar`
-  const url = `https://github.com/DontShaveTheYak/groovy-guru/releases/download/${version}/${fileName}`
-  const fileDownloader: FileDownloader = await getApi();
-
-  const existingBin = await fileDownloader.tryGetItem(fileName, extensionContext);
-
-  if (existingBin) {
-    serverBin = existingBin
-    return
-  }
-
-  vscode.window.showInformationMessage(`Downloading groovy-language-server ${version} from GitHub.`)
-
-  const cancellationTokenSource = new CancellationTokenSource();
-  const cancellationToken = cancellationTokenSource.token;
-
-  const progressCallback = (downloadedBytes: number, totalBytes: number | undefined) => {
-      console.log(`Downloaded ${downloadedBytes}/${totalBytes} bytes`);
-  };
-
-  serverBin = await fileDownloader.downloadFile(
-    Uri.parse(url),
-    fileName,
-    extensionContext,
-    cancellationToken,
-    progressCallback
-  );
 }
 
 function startLanguageServer() {
@@ -158,12 +113,6 @@ function startLanguageServer() {
           }
           return;
         }
-        if (!serverBin) {
-          //something very bad happened!
-          resolve();
-          vscode.window.showErrorMessage(STARTUP_ERROR);
-          return;
-        }
         progress.report({ message: INITIALIZING_MESSAGE });
         let clientOptions: LanguageClientOptions = {
           documentSelector: [{ scheme: "file", language: "groovy" }],
@@ -186,10 +135,14 @@ function startLanguageServer() {
         };
         let args = [
           "-jar",
-          serverBin.fsPath,
+          path.resolve(
+            extensionContext.extensionPath,
+            "bin",
+            "groovy-language-server-all.jar"
+          ),
         ];
         //uncomment to allow a debugger to attach to the language server
-        // args.unshift("-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005,quiet=y");
+        //args.unshift("-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005,quiet=y");
         let executable: Executable = {
           command: javaPath,
           args: args,

@@ -1,97 +1,119 @@
 {
-  "name": "groovy-guru",
-  "displayName": "Groovy-Guru",
-  "description": "Groovy Intellisense for Visual Studio Code",
-  "version": "0.0.0",
-  "preview": true,
-  "publisher": "DontShaveTheYak",
-  "homepage": "https://github.com/DontShaveTheYak/groovy-guru",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/DontShaveTheYak/groovy-guru.git"
-  },
-  "bugs": {
-    "url": "https://github.com/DontShaveTheYak/groovy-guru/issues"
-  },
-  "icon": "media/icon.png",
-  "galleryBanner": {
-    "color": "#5c2d91",
-    "theme": "light"
-  },
-  "license": "Apache-2.0",
-  "private": true,
-  "categories": [
-    "Programming Languages"
-  ],
-  "keywords": [
-    "Groovy",
-    "Grails"
-  ],
-  "main": "./build/extension",
-  "engines": {
-    "vscode": "^1.56.0"
-  },
-  "devDependencies": {
-    "@types/node": "^14.17.3",
-    "@types/vscode": "^1.56.0",
-    "ts-loader": "^9.2.3",
-    "typescript": "^4.3.2",
-    "vsce": "^1.93.0",
-    "vscode-jsonrpc": "^6.0.0",
-    "vscode-languageclient": "^7.0.0",
-    "webpack": "^5.38.1",
-    "webpack-cli": "^4.7.2"
-  },
-  "activationEvents": [
-    "onLanguage:groovy",
-    "onCommand:groovy.restartServer"
-  ],
-  "contributes": {
-    "languages": [
-      {
-        "id": "groovy",
-        "extensions": [
-          ".groovy"
-        ],
-        "aliases": [
-          "Groovy"
-        ]
-      }
-    ],
-    "commands": [
-      {
-        "command": "groovy.restartServer",
-        "title": "Restart Groovy language server",
-        "category": "Groovy"
-      }
-    ],
-    "configuration": {
-      "type": "object",
-      "description": "Groovy configuration",
-      "properties": {
-        "groovy.java.home": {
-          "type": [
-            "string",
-            "null"
-          ],
-          "default": null,
-          "description": "Specifies the folder path to the JDK. Use this setting if the extension cannot find Java automatically."
-        },
-        "groovy.classpath": {
-          "type": "array",
-          "default": null,
-          "description": "Specifies additional entries to add to the classpath. May contain both folders and individual .jar files.",
-          "items": {
-            "type": "string"
-          }
-        }
-      }
-    }
-  },
-  "dependencies": {
-    "@microsoft/vscode-file-downloader-api": "^1.0.1"
-  },
-  "extensionDependencies": [
-    "mindaro-dev.file-downloader"
-  ]
+	"name": "groovy-guru",
+	"displayName": "Groovy-Guru",
+	"description": "Groovy Intellisense for Visual Studio Code",
+	"version": "0.0.0",
+	"preview": true,
+	"publisher": "DontShaveTheYak",
+	"homepage": "https://github.com/DontShaveTheYak/groovy-guru",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/DontShaveTheYak/groovy-guru.git"
+	},
+	"bugs": {
+		"url": "https://github.com/DontShaveTheYak/groovy-guru/issues"
+	},
+	"icon": "media/icon.png",
+	"galleryBanner": {
+		"color": "#5c2d91",
+		"theme": "light"
+	},
+	"license": "Apache-2.0",
+	"private": true,
+	"categories": [
+		"Programming Languages"
+	],
+	"keywords": [
+		"Groovy",
+		"Jenkins",
+		"Jenkinsfile",
+		"IntelliSense",
+		"DevOps"
+	],
+	"engines": {
+		"vscode": "^1.56.0"
+	},
+	"activationEvents": [
+		"onLanguage:groovy",
+		"onCommand:groovy.restartServer"
+	],
+	"main": "./dist/extension.js",
+	"contributes": {
+		"languages": [
+			{
+				"id": "groovy",
+				"extensions": [
+					".groovy"
+				],
+				"aliases": [
+					"Groovy"
+				]
+			}
+		],
+		"commands": [
+			{
+				"command": "groovy.restartServer",
+				"title": "Restart Groovy language server",
+				"category": "Groovy"
+			}
+		],
+		"configuration": {
+			"type": "object",
+			"description": "Groovy configuration",
+			"properties": {
+				"groovy.java.home": {
+					"type": [
+						"string",
+						"null"
+					],
+					"default": null,
+					"description": "Specifies the folder path to the JDK. Use this setting if the extension cannot find Java automatically."
+				},
+				"groovy.classpath": {
+					"type": "array",
+					"default": null,
+					"description": "Specifies additional entries to add to the classpath. May contain both folders and individual .jar files.",
+					"items": {
+						"type": "string"
+					}
+				}
+			}
+		}
+	},
+	"scripts": {
+		"vscode:prepublish": "yarn run package",
+		"compile": "webpack",
+		"watch": "webpack --watch",
+		"package": "webpack --mode production --devtool hidden-source-map",
+		"test-compile": "tsc -p ./",
+		"test-watch": "tsc -watch -p ./",
+		"pretest": "yarn run test-compile && yarn run lint",
+		"lint": "eslint src --ext ts",
+		"test": "node ./out/test/runTest.js",
+		"build-server": "mkdir -p bin && cd contrib/groovy-language-server/ && ./gradlew build && cp build/libs/groovy-language-server-all.jar ../../bin/",
+		"build-extension": "vsce package --yarn --no-git-tag-version",
+		"build": "yarn run build-server && yarn run build-extension",
+		"ci": "yarn run pretest && yarn run build && yarn run test",
+		"publish": "vsce publish --yarn --no-git-tag-version --packagePath"
+	},
+	"dependencies": {
+		"vscode-languageclient": "^7.0.0"
+	},
+	"devDependencies": {
+		"@types/glob": "^7.1.3",
+		"@types/mocha": "^8.2.2",
+		"@types/node": "14.x",
+		"@types/vscode": "^1.56.0",
+		"@typescript-eslint/eslint-plugin": "^4.26.0",
+		"@typescript-eslint/parser": "^4.26.0",
+		"eslint": "^7.27.0",
+		"glob": "^7.1.7",
+		"mocha": "^8.4.0",
+		"ts-loader": "^9.2.2",
+		"typescript": "^4.3.2",
+		"vsce": "^1.96.1",
+		"vscode-test": "^1.5.2",
+		"webpack": "^5.38.1",
+		"webpack-cli": "^4.7.0"
+	}
 }
