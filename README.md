@@ -1,10 +1,10 @@
 # Groovy IntelliSense for Visual Studio Code
+[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/DontShaveTheYak/groovy-guru/Tests?label=Tests)](https://github.com/DontShaveTheYak/groovy-guru/actions/workflows/test.yml?query=branch%3Amaster)
+[![Marketplace Version](https://vsmarketplacebadge.apphb.com/version-short/DontShaveTheYak.groovy-guru.svg "Current Release")][VS Code Groovy extension]
 
-<!--TODO: We should add a badge for the build status or link to the build dashboard.-->
-
-[The Groovy-Guru extension](https://marketplace.visualstudio.com/items?itemName=DontShaveTheYak.groovy-guru)
+The [Groovy-Guru][VS Code Groovy extension] extension
 provides rich language support for the
-[Groovy programming language](https://groovy-lang.org/) using the [Groovy Language Server](https://github.com/prominic/groovy-language-server).
+[Groovy](https://groovy-lang.org/) programming language, using the Groovy [Language Server](https://github.com/prominic/groovy-language-server).
 
 ## Quick Start
 
@@ -56,4 +56,4 @@ Now you can install it into vscode.
 <!-- * [Best-README-Template](https://github.com/othneildrew/Best-README-Template) -->
 
 [Managing extensions in VS Code]: https://code.visualstudio.com/docs/editor/extension-gallery
-[VS Code Go extension]: https://marketplace.visualstudio.com/items?itemName=DontShaveTheYak.groovy-guru
+[VS Code Groovy extension]: https://marketplace.visualstudio.com/items?itemName=DontShaveTheYak.groovy-guru
