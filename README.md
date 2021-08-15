@@ -4,7 +4,7 @@
 
 The [Groovy-Guru][VS Code Groovy extension] extension
 provides rich language support for the
-[Groovy](https://groovy-lang.org/) programming language, using the Groovy [Language Server](https://github.com/prominic/groovy-language-server).
+[Groovy](https://groovy-lang.org/) programming language, using the Groovy [Language Server](https://github.com/prominic/groovy-language-server). You can also install [Groovy-Guru][VS Code Groovy extension] using the [Jenkins Extension Pack](https://marketplace.visualstudio.com/items?itemName=DontShaveTheYak.jenkins-extension-pack), which is a must have when developing pipelines for Jenkins.
 
 ## Quick Start
 
@@ -24,9 +24,9 @@ You are ready to get Groovy :-) &nbsp;&nbsp; 🎉🎉🎉
 
 The extension is currently a work-in-progress but does provide basic IntelliSense. We plan to extend this extension to include code navigation and code editing.
 
-- Code completion and Signature help
+- Code completion and Signature help  
   <img src="docs/images/completion-signature-help.gif">
-- See GroovyDoc strings on Classes, Fields, Methods and Functions.
+- See GroovyDoc strings on Classes, Fields, Methods and Functions.  
   <img src="docs/images/docstring-help.gif">
 
 ## Build from source
