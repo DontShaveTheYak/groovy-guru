@@ -96,6 +96,10 @@
 		"ci": "yarn run pretest && yarn run build && yarn run test",
 		"publish": "vsce publish --yarn --no-git-tag-version --packagePath"
 	},
+	"pre-commit": [
+		"pretest",
+		"build"
+	],
 	"dependencies": {
 		"vscode-languageclient": "^7.0.0"
 	},
@@ -109,6 +113,7 @@
 		"eslint": "^7.27.0",
 		"glob": "^7.1.7",
 		"mocha": "^8.4.0",
+		"pre-commit": "^1.2.2",
 		"ts-loader": "^9.2.2",
 		"typescript": "^4.3.2",
 		"vsce": "^1.96.1",

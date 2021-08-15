@@ -1,10 +1,10 @@
 # Groovy IntelliSense for Visual Studio Code
+[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/DontShaveTheYak/groovy-guru/Tests?label=Tests)](https://github.com/DontShaveTheYak/groovy-guru/actions/workflows/test.yml?query=branch%3Amaster)
+[![Marketplace Version](https://vsmarketplacebadge.apphb.com/version-short/DontShaveTheYak.groovy-guru.svg "Current Release")][VS Code Groovy extension]
 
-<!--TODO: We should add a badge for the build status or link to the build dashboard.-->
-
-[The Groovy-Guru extension](https://marketplace.visualstudio.com/items?itemName=DontShaveTheYak.groovy-guru)
+The [Groovy-Guru][VS Code Groovy extension] extension
 provides rich language support for the
-[Groovy programming language](https://groovy-lang.org/) using the [Groovy Language Server](https://github.com/prominic/groovy-language-server).
+[Groovy](https://groovy-lang.org/) programming language, using the Groovy [Language Server](https://github.com/prominic/groovy-language-server).
 
 ## Quick Start
 
@@ -24,23 +24,17 @@ You are ready to get Groovy :-) &nbsp;&nbsp; 🎉🎉🎉
 
 The extension is currently a work-in-progress but does provide basic IntelliSense. We plan to extend this extension to include code navigation and code editing.
 
-<p align=center>
-<img src="docs/images/completion-signature-help.gif">
-<br/>
-<em>(Code completion and Signature Help)</em>
-</p>
+- Code completion and Signature help
+  <img src="docs/images/completion-signature-help.gif">
+- See GroovyDoc strings on Classes, Fields, Methods and Functions.
+  <img src="docs/images/docstring-help.gif">
 
 ## Build from source
 
 You first need to build the language server.
 
 ```sh
-yarn run build-server
-```
-
-Then you can package the extension.
-```sh
-yarn run build-extension
+yarn run build
 ```
 
 Now you can install it into vscode.
@@ -50,7 +44,10 @@ Now you can install it into vscode.
   code --install-extension groovy-guru-0.0.0.vsix
   ```
 
-- Using the GUI - `ctrl` + `shift` + `p` then type "Extensions: Install from VSIX"
+- Using the GUI
+  - Type `ctrl` + `shift` + `p`
+  - Then type `Extensions: Install from VSIX`
+  - Then find this directory and select `groovy-guru-0.0.0.vsix`
 
 ## Acknowledgements
 * [Groovy Language Server](https://github.com/prominic/groovy-language-server)
@@ -59,4 +56,4 @@ Now you can install it into vscode.
 <!-- * [Best-README-Template](https://github.com/othneildrew/Best-README-Template) -->
 
 [Managing extensions in VS Code]: https://code.visualstudio.com/docs/editor/extension-gallery
-[VS Code Go extension]: https://marketplace.visualstudio.com/items?itemName=DontShaveTheYak.groovy-guru
+[VS Code Groovy extension]: https://marketplace.visualstudio.com/items?itemName=DontShaveTheYak.groovy-guru
