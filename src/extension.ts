@@ -20,6 +20,7 @@
 import findJava from "./utils/findJava";
 import * as path from "path";
 import * as vscode from "vscode";
+import { extensionStatusBar } from "./gui/extensionStatusBarProvider";
 import {
   LanguageClient,
   LanguageClientOptions,
@@ -49,6 +50,9 @@ function onDidChangeConfiguration(event: vscode.ConfigurationChangeEvent) {
 }
 
 function restartLanguageServer() {
+
+  extensionStatusBar.restart();
+
   if (!languageClient) {
     startLanguageServer();
     return;
@@ -75,7 +79,13 @@ function restartLanguageServer() {
 
 export function activate(context: vscode.ExtensionContext) {
   extensionContext = context;
+
+  // Enable the status bar and tell it to display.
+  context.subscriptions.push(extensionStatusBar);
+  extensionStatusBar.startUp();
+
   javaPath = findJava();
+
   vscode.workspace.onDidChangeConfiguration(onDidChangeConfiguration);
 
   vscode.commands.registerCommand(
@@ -98,10 +108,12 @@ function startLanguageServer() {
         if (!extensionContext) {
           //something very bad happened!
           resolve();
+          extensionStatusBar.setError();
           vscode.window.showErrorMessage(STARTUP_ERROR);
           return;
         }
         if (!javaPath) {
+          extensionStatusBar.setError();
           resolve();
           let settingsJavaHome = vscode.workspace
             .getConfiguration("groovy")
@@ -155,10 +167,12 @@ function startLanguageServer() {
         );
         languageClient.onReady().then(resolve, (reason: any) => {
           resolve();
+          extensionStatusBar.setError();
           vscode.window.showErrorMessage(STARTUP_ERROR);
         });
         let disposable = languageClient.start();
         extensionContext.subscriptions.push(disposable);
+        extensionStatusBar.running();
       });
     }
   );
