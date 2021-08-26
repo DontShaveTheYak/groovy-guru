@@ -16,7 +16,8 @@ extension fits your needs and enhances your development experience.
   and the [VS Code Groovy extension].
   * [Managing extensions in VS Code].
 * **Step 2.** To activate the extension, open any directory or workspace
-  containing Groovy code.
+  containing Groovy code and look for the thumbs up! 👍  
+  <img src="docs/images/status-bar.png">
 
 You are ready to get Groovy :-) &nbsp;&nbsp; 🎉🎉🎉
 
@@ -24,9 +25,9 @@ You are ready to get Groovy :-) &nbsp;&nbsp; 🎉🎉🎉
 
 The extension is currently a work-in-progress but does provide basic IntelliSense. We plan to extend this extension to include code navigation and code editing.
 
-- Code completion and Signature help  
+- Code completion and Signature help
   <img src="docs/images/completion-signature-help.gif">
-- See GroovyDoc strings on Classes, Fields, Methods and Functions.  
+- See GroovyDoc strings on Classes, Fields, Methods and Functions.
   <img src="docs/images/docstring-help.gif">
 
 ## Build from source
