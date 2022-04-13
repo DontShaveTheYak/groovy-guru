@@ -133,3 +133,7 @@ jobs:
         run: yarn run publish groovy-guru-${{needs.tag.outputs.tag}}.vsix
         env:
           VSCE_PAT: ${{ secrets.VSCE_PAT }}
+
+      - name: Publish Extension to OVSX
+        if: github.base_ref == 'master'
+        run: yarn run ovsx publish groovy-guru-${{needs.tag.outputs.tag}}.vsix -p ${{ secrets.OVSX_PAT }}
