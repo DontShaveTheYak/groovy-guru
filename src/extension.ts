@@ -40,19 +40,19 @@ let extensionContext: vscode.ExtensionContext | null = null;
 let languageClient: LanguageClient | null = null;
 let javaPath: string | null = null;
 
-let channel = vscode.window.createOutputChannel('Groovy Guru Client')
+let channel = vscode.window.createOutputChannel('Groovy Guru Client');
 
 function onDidChangeConfiguration(event: vscode.ConfigurationChangeEvent) {
 
-  channel.appendLine('The configuration has changed.')
+  channel.appendLine('The configuration has changed.');
 
   if (event.affectsConfiguration("groovy.java.home")) {
 
-    channel.appendLine('The setting "groovy.java.home" has been updated.')
+    channel.appendLine('The setting "groovy.java.home" has been updated.');
 
     javaPath = findJava();
 
-    channel.appendLine(`The new java path is now ${javaPath}.`)
+    channel.appendLine(`The new java path is now ${javaPath}.`);
 
     //we're going to try to kill the language server and then restart
     //it with the new settings
@@ -62,7 +62,7 @@ function onDidChangeConfiguration(event: vscode.ConfigurationChangeEvent) {
 
 function restartLanguageServer() {
 
-  channel.appendLine('Restarting the Language Server.')
+  channel.appendLine('Restarting the Language Server.');
 
   extensionStatusBar.restart();
 
@@ -92,7 +92,7 @@ function restartLanguageServer() {
 
 export function activate(context: vscode.ExtensionContext) {
 
-  channel.appendLine('The extension has been activated.')
+  channel.appendLine('The extension has been activated.');
 
   extensionContext = context;
 
@@ -113,13 +113,13 @@ export function activate(context: vscode.ExtensionContext) {
 }
 
 export function deactivate() {
-  channel.appendLine('The extension is deactivating.')
+  channel.appendLine('The extension is deactivating.');
   extensionContext = null;
 }
 
 function startLanguageServer() {
 
-  channel.appendLine('Starting the language server.')
+  channel.appendLine('Starting the language server.');
 
   vscode.window.withProgress(
     { location: vscode.ProgressLocation.Window },
@@ -203,7 +203,9 @@ function startLanguageServer() {
         });
         let disposable = languageClient.start();
         extensionContext.subscriptions.push(disposable);
-        channel.appendLine('The extension is running.')
+
+        channel.appendLine('The extension is running.');
+
         extensionStatusBar.running();
       });
     }
