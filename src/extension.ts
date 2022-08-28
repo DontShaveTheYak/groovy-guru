@@ -40,9 +40,20 @@ let extensionContext: vscode.ExtensionContext | null = null;
 let languageClient: LanguageClient | null = null;
 let javaPath: string | null = null;
 
+let channel = vscode.window.createOutputChannel('Groovy Guru Client');
+
 function onDidChangeConfiguration(event: vscode.ConfigurationChangeEvent) {
+
+  channel.appendLine('The configuration has changed.');
+
   if (event.affectsConfiguration("groovy.java.home")) {
+
+    channel.appendLine('The setting "groovy.java.home" has been updated.');
+
     javaPath = findJava();
+
+    channel.appendLine(`The new java path is now ${javaPath}.`);
+
     //we're going to try to kill the language server and then restart
     //it with the new settings
     restartLanguageServer();
@@ -50,6 +61,8 @@ function onDidChangeConfiguration(event: vscode.ConfigurationChangeEvent) {
 }
 
 function restartLanguageServer() {
+
+  channel.appendLine('Restarting the Language Server.');
 
   extensionStatusBar.restart();
 
@@ -78,6 +91,9 @@ function restartLanguageServer() {
 }
 
 export function activate(context: vscode.ExtensionContext) {
+
+  channel.appendLine('The extension has been activated.');
+
   extensionContext = context;
 
   // Enable the status bar and tell it to display.
@@ -97,10 +113,14 @@ export function activate(context: vscode.ExtensionContext) {
 }
 
 export function deactivate() {
+  channel.appendLine('The extension is deactivating.');
   extensionContext = null;
 }
 
 function startLanguageServer() {
+
+  channel.appendLine('Starting the language server.');
+
   vscode.window.withProgress(
     { location: vscode.ProgressLocation.Window },
     (progress) => {
@@ -118,14 +138,23 @@ function startLanguageServer() {
           let settingsJavaHome = vscode.workspace
             .getConfiguration("groovy")
             .get("java.home") as string;
+
           if (settingsJavaHome) {
+
+            extensionStatusBar.updateTooltip(INVALID_JAVA_ERROR);
             vscode.window.showErrorMessage(INVALID_JAVA_ERROR);
+
           } else {
+            extensionStatusBar.updateTooltip(MISSING_JAVA_ERROR);
             vscode.window.showErrorMessage(MISSING_JAVA_ERROR);
           }
+
           return;
+
         }
+
         progress.report({ message: INITIALIZING_MESSAGE });
+
         let clientOptions: LanguageClientOptions = {
           documentSelector: [{ scheme: "file", language: "groovy" }],
           synchronize: {
@@ -145,6 +174,7 @@ function startLanguageServer() {
             protocol2Code: (value) => vscode.Uri.parse(value),
           },
         };
+
         let args = [
           "-jar",
           path.resolve(
@@ -153,6 +183,7 @@ function startLanguageServer() {
             "groovy-language-server-all.jar"
           ),
         ];
+
         //uncomment to allow a debugger to attach to the language server
         //args.unshift("-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005,quiet=y");
         let executable: Executable = {
@@ -172,6 +203,9 @@ function startLanguageServer() {
         });
         let disposable = languageClient.start();
         extensionContext.subscriptions.push(disposable);
+
+        channel.appendLine('The extension is running.');
+
         extensionStatusBar.running();
       });
     }

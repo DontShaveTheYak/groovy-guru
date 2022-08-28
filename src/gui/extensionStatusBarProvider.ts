@@ -29,18 +29,18 @@ class ExtensionStatusBarProvider implements Disposable {
 	}
 
 	public startUp(): void {
-		this.statusBarItem.text = StatusIcon.Launching;
+		this.statusBarItem.text = StatusIcon.launching;
 		this.statusBarItem.tooltip = 'Groovy-Guru is Starting.';
 		this.statusBarItem.show();
 	}
 
 	public restart(): void {
-		this.statusBarItem.text = StatusIcon.Busy;
+		this.statusBarItem.text = StatusIcon.busy;
 		this.statusBarItem.tooltip = 'Groovy-Guru is Restarting.';
 	}
 
 	public running(): void {
-		this.statusBarItem.text = StatusIcon.Ready;
+		this.statusBarItem.text = StatusIcon.ready;
 		this.statusBarItem.tooltip = 'Groovy-Guru is running.';
 	}
 
@@ -49,15 +49,15 @@ class ExtensionStatusBarProvider implements Disposable {
 	}
 
 	public setBusy(): void {
-		this.statusBarItem.text = StatusIcon.Busy;
+		this.statusBarItem.text = StatusIcon.busy;
 	}
 
 	public setError(): void {
-		this.statusBarItem.text = StatusIcon.Error;
+		this.statusBarItem.text = StatusIcon.error;
 	}
 
 	public setReady(): void {
-		this.statusBarItem.text = StatusIcon.Ready;
+		this.statusBarItem.text = StatusIcon.ready;
 	}
 
 	public updateTooltip(tooltip: string): void {
@@ -70,10 +70,10 @@ class ExtensionStatusBarProvider implements Disposable {
 }
 
 enum StatusIcon {
-	Busy = "$(sync~spin)",
-	Ready = "$(thumbsup)",
-	Error = "$(thumbsdown)",
-	Launching = "$(rocket)",
+	busy = "$(sync~spin)",
+	ready = "$(thumbsup)",
+	error = "$(thumbsdown)",
+	launching = "$(rocket)",
 }
 
 export const extensionStatusBar: ExtensionStatusBarProvider = new ExtensionStatusBarProvider();

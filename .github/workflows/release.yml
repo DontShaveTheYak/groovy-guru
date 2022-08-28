@@ -14,7 +14,7 @@ jobs:
     steps:
 
       - name: Checkout Code
-        uses: actions/checkout@v2.3.4
+        uses: actions/checkout@v2.4.2
         with:
           fetch-depth: 0
 
@@ -86,7 +86,7 @@ jobs:
     steps:
 
       - name: Checkout Code
-        uses: actions/checkout@v2.3.4
+        uses: actions/checkout@v2.4.2
         with:
           ref: ${{ github.base_ref }}
           submodules: 'true'
@@ -133,3 +133,7 @@ jobs:
         run: yarn run publish groovy-guru-${{needs.tag.outputs.tag}}.vsix
         env:
           VSCE_PAT: ${{ secrets.VSCE_PAT }}
+
+      - name: Publish Extension to OVSX
+        if: github.base_ref == 'master'
+        run: yarn run ovsx publish groovy-guru-${{needs.tag.outputs.tag}}.vsix -p ${{ secrets.OVSX_PAT }}
