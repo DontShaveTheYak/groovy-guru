@@ -9,6 +9,7 @@ on:
       - 'package.json'
       - '.github/workflows/test.yml'
       - 'src/**'
+      - 'contrib/**'
 
 jobs:
   build:
