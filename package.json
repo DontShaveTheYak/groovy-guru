@@ -31,7 +31,7 @@
 		"DevOps"
 	],
 	"engines": {
-		"vscode": "^1.56.0"
+		"vscode": "^1.0.0"
 	},
 	"activationEvents": [
 		"onLanguage:groovy",
