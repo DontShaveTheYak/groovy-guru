@@ -58,7 +58,7 @@ jobs:
     needs: [tag]
     steps:
       - name: Create Draft Release
-        uses: release-drafter/release-drafter@v5.15.0
+        uses: release-drafter/release-drafter@v5.25.0
         if: github.base_ref == 'develop'
         with:
           tag: ${{needs.tag.outputs.tag}}
@@ -70,7 +70,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create Release
-        uses: release-drafter/release-drafter@v5.15.0
+        uses: release-drafter/release-drafter@v5.25.0
         if: github.base_ref == 'master'
         with:
           tag: ${{needs.tag.outputs.tag}}
